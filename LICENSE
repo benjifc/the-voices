@@ -1,0 +1,60 @@
+LICENCIA DE USO Y MEJORA CON ATRIBUCIÓN Y FORK DESDE EL ORIGINAL
+
+The Voices
+Copyright (c) 2026 Benjamin Fernandez Carrasco (el «Autor»)
+
+Se concede permiso, sin coste, a cualquier persona que obtenga una copia de este
+software y de sus ficheros de documentación (el «Software») para usarlo, copiarlo,
+modificarlo, mejorarlo, fusionarlo, publicarlo y distribuirlo, incluidas las obras
+derivadas, con sujeción a las condiciones siguientes.
+
+1. ATRIBUCIÓN AL CREADOR ORIGINAL
+   Toda copia, parte sustancial u obra derivada del Software, en forma de código
+   fuente o de binario, debe:
+   a) conservar el aviso de copyright anterior y el texto íntegro de esta licencia; y
+   b) mencionar de forma visible al creador original, «Benjamin Fernandez Carrasco»,
+      en el fichero README de la obra derivada y, si el Software o su obra derivada
+      tiene interfaz gráfica, también en su pantalla «Acerca de» o equivalente. La
+      mención debe indicar que la obra deriva de The Voices, creado por Benjamin
+      Fernandez Carrasco, y enlazar al repositorio original.
+
+2. MEJORAS SOLO MEDIANTE FORK DEL REPOSITORIO ORIGINAL
+   Las modificaciones y mejoras del Software deben desarrollarse y publicarse como
+   fork (bifurcación) del repositorio original designado por el Autor en el fichero
+   README.md (el «Repositorio Original»), conservando su historial de cambios y un
+   enlace visible al Repositorio Original. No está permitido publicar el Software, o
+   una obra derivada, como un repositorio independiente que no sea fork del
+   Repositorio Original, ni con el historial de cambios eliminado o reescrito para
+   ocultar su origen.
+
+3. MARCADO DE LAS MODIFICACIONES
+   Las obras derivadas deben indicar claramente que han sido modificadas respecto al
+   original y no deben presentarse como el Software original.
+
+4. MISMA LICENCIA PARA LAS OBRAS DERIVADAS
+   Las obras derivadas que se distribuyan deben hacerlo bajo esta misma licencia,
+   sin añadir restricciones que impidan a terceros ejercer los permisos y
+   obligaciones aquí descritos.
+
+5. SIN APOYO IMPLÍCITO
+   El nombre del Autor solo puede usarse para cumplir la atribución de la cláusula 1.
+   No puede usarse para promocionar ni sugerir el respaldo del Autor a una obra
+   derivada sin su permiso previo y por escrito.
+
+6. COMPONENTES DE TERCEROS
+   Esta licencia no se aplica a las dependencias de terceros (por ejemplo,
+   KeyboardShortcuts) ni a software externo que el Software utiliza (por ejemplo,
+   BlackHole), que conservan sus propias licencias.
+
+7. TERMINACIÓN
+   Los permisos de esta licencia terminan automáticamente si se incumple alguna de
+   sus condiciones. Se restablecen si el incumplimiento se corrige en un plazo de 30
+   días desde que se tenga conocimiento de él.
+
+8. SIN GARANTÍA
+   EL SOFTWARE SE ENTREGA «TAL CUAL», SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
+   IMPLÍCITA, INCLUIDAS LAS DE COMERCIABILIDAD, IDONEIDAD PARA UN FIN CONCRETO Y
+   AUSENCIA DE INFRACCIÓN. EN NINGÚN CASO EL AUTOR SERÁ RESPONSABLE DE
+   RECLAMACIONES, DAÑOS U OTRAS RESPONSABILIDADES DERIVADOS DEL SOFTWARE, DE SU USO
+   O DE OTRAS OPERACIONES CON ÉL, YA SEA EN UNA ACCIÓN CONTRACTUAL, EXTRACONTRACTUAL
+   O DE OTRO TIPO.

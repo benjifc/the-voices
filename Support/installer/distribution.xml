@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="2">
+    <title>The Voices</title>
+    <organization>local.thevoices</organization>
+    <welcome file="welcome.html" mime-type="text/html"/>
+    <license file="license.txt" mime-type="text/plain"/>
+    <conclusion file="conclusion.html" mime-type="text/html"/>
+    <options customize="never" require-scripts="false" hostArchitectures="arm64"/>
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min="15.0"/>
+        </allowed-os-versions>
+    </volume-check>
+    <choices-outline>
+        <line choice="default">
+            <line choice="local.thevoices.app"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="local.thevoices.app" visible="false">
+        <pkg-ref id="local.thevoices.app"/>
+    </choice>
+    <pkg-ref id="local.thevoices.app" version="@VERSION@" onConclusion="none">component.pkg</pkg-ref>
+</installer-gui-script>
