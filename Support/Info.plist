@@ -2,33 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleIdentifier</key>
-    <string>local.thevoices.app</string>
-    <key>CFBundleName</key>
-    <string>The Voices</string>
-    <key>CFBundleExecutable</key>
-    <string>TheVoices</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>CFBundleShortVersionString</key>
-    <string>0.1.0</string>
-    <key>CFBundleVersion</key>
-    <string>1</string>
-    <key>LSUIElement</key>
-    <true/>
-    <key>LSMinimumSystemVersion</key>
-    <string>15.0</string>
-    <key>SUFeedURL</key>
-    <string>https://github.com/benjifc/the-voices/releases/latest/download/appcast.xml</string>
-    <key>SUPublicEDKey</key>
-    <string>YC75uIC86JSDZI10ufOFy7le9soYj9qmxzohtbZvwQY=</string>
-    <key>SUEnableAutomaticChecks</key>
-    <true/>
-    <key>SUAutomaticallyUpdate</key>
-    <true/>
-    <key>SUScheduledCheckInterval</key>
-    <integer>21600</integer>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>The Voices necesita el micrófono para procesar tu voz en tiempo real.</string>
+	<key>CFBundleExecutable</key>
+	<string>TheVoices</string>
+	<key>CFBundleIdentifier</key>
+	<string>local.thevoices.app</string>
+	<key>CFBundleName</key>
+	<string>The Voices</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1.0</string>
+	<key>CFBundleVersion</key>
+	<string>2</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>15.0</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>The Voices necesita el micrófono para procesar tu voz en tiempo real.</string>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://github.com/benjifc/the-voices/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>YC75uIC86JSDZI10ufOFy7le9soYj9qmxzohtbZvwQY=</string>
+	<key>SUScheduledCheckInterval</key>
+	<integer>21600</integer>
 </dict>
 </plist>
