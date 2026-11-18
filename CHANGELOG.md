@@ -8,7 +8,8 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ### Añadido
 
-- Procesado de voz en tiempo real (48 kHz, mono): filtros biquad, puerta de ruido, compresor, de-esser y limitador de pico con lookahead.
+- Primera versión de desarrollo: por ahora la app solo muestra el icono de la barra de menús (con «Buscar actualizaciones…» y «Salir»); el motor de audio todavía no está conectado a la interfaz.
+- Biblioteca de procesado de voz (48 kHz, mono): filtros biquad, puerta de ruido, compresor, de-esser y limitador de pico con lookahead.
 - Cadena «Mi voz mejorada» con tres niveles (Suave, Normal y Radio).
 - Cambio de tono granular (`PitchShifter`) y detector de tono YIN (`PitchDetector`).
 - Instalador `.pkg` (`scripts/build-pkg.sh`) que instala la app en `/Applications`.

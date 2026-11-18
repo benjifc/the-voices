@@ -103,6 +103,7 @@ echo "  build/appcast.xml"
 echo "  build/release-notes.md"
 
 if [ "$DRY" = 1 ]; then
+    git checkout -- build 2>/dev/null || true  # paquetes ya versionados que se hayan regenerado
     echo "Simulacro terminado: no se ha tocado git ni GitHub (CHANGELOG.md e Info.plist restaurados)."
     exit 0
 fi
@@ -116,7 +117,8 @@ if [ "$YES" != 1 ]; then
     [[ "$answer" =~ ^[sSyY]$ ]] || die "cancelado (CHANGELOG.md e Info.plist se restauran)"
 fi
 
-git add "$PLIST" CHANGELOG.md
+# Los paquetes publicados también quedan versionados (el .gitignore deja pasar .pkg y .zip).
+git add "$PLIST" CHANGELOG.md "$PKG" "$ZIP"
 git commit -q -m "chore(release): $TAG
 
 Benjamin Fernandez Carrasco"
