@@ -1,6 +1,30 @@
+# Compilación y dependencias
 .build/
-build/
 .swiftpm/
 *.xcodeproj
+xcuserdata/
+DerivedData/
+
+# Artefactos: de build/ solo se versionan los paquetes instalables (.pkg y .zip).
+# La app (.app), los temporales del instalador, el appcast y las notas se quedan fuera.
+build/*
+!build/*.pkg
+!build/*.zip
+
+# Secretos: nunca al repositorio (claves de firma de actualizaciones, certificados, entornos)
+.env
+.env.*
+*.pem
+*.p12
+*.key
+clave*.txt
+sparkle_private*
+
+# Sistema y editores
 .DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Planes y notas de trabajo locales
 .superpowers/
