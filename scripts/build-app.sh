@@ -16,5 +16,10 @@ for b in "$BIN_DIR"/*.bundle; do
     [ -e "$b" ] && cp -R "$b" "$APP/Contents/Resources/"
 done
 
+# Sparkle (actualizaciones automáticas): el framework va en Contents/Frameworks
+mkdir -p "$APP/Contents/Frameworks"
+cp -R "$BIN_DIR/Sparkle.framework" "$APP/Contents/Frameworks/"
+install_name_tool -add_rpath @executable_path/../Frameworks "$APP/Contents/MacOS/TheVoices"
+
 codesign --force --deep --sign - "$APP"
 echo "Creada: $APP"

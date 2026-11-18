@@ -18,6 +18,16 @@
     <true/>
     <key>LSMinimumSystemVersion</key>
     <string>15.0</string>
+    <key>SUFeedURL</key>
+    <string>https://github.com/benjifc/the-voices/releases/latest/download/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>YC75uIC86JSDZI10ufOFy7le9soYj9qmxzohtbZvwQY=</string>
+    <key>SUEnableAutomaticChecks</key>
+    <true/>
+    <key>SUAutomaticallyUpdate</key>
+    <true/>
+    <key>SUScheduledCheckInterval</key>
+    <integer>21600</integer>
     <key>NSMicrophoneUsageDescription</key>
     <string>The Voices necesita el micrófono para procesar tu voz en tiempo real.</string>
 </dict>

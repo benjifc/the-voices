@@ -5,7 +5,7 @@
     <welcome file="welcome.html" mime-type="text/html"/>
     <license file="license.txt" mime-type="text/plain"/>
     <conclusion file="conclusion.html" mime-type="text/html"/>
-    <options customize="never" require-scripts="false" hostArchitectures="arm64"/>
+    <options customize="never" hostArchitectures="arm64"/>
     <volume-check>
         <allowed-os-versions>
             <os-version min="15.0"/>

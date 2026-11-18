@@ -1,5 +1,5 @@
 #!/bin/bash
-# Genera el instalador "build/The Voices-<versión>.pkg" (instala en /Applications).
+# Genera el instalador "build/TheVoices-<versión>.pkg" (instala en /Applications).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -9,7 +9,7 @@ APP="build/The Voices.app"
 VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Support/Info.plist)"
 STAGE="build/pkg-stage"
 RESOURCES="$STAGE/resources"
-PKG="build/The Voices-$VERSION.pkg"
+PKG="build/TheVoices-$VERSION.pkg"
 
 rm -rf "$STAGE" "$PKG"
 mkdir -p "$STAGE/root" "$RESOURCES"
@@ -28,6 +28,7 @@ pkgbuild \
     --identifier local.thevoices.app \
     --version "$VERSION" \
     --install-location /Applications \
+    --scripts Support/installer/scripts \
     "$STAGE/component.pkg" >/dev/null
 
 # Pantallas del instalador (la licencia sale del LICENSE del repositorio).
