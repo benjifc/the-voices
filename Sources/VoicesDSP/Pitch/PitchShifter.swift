@@ -26,25 +26,26 @@ public final class PitchShifter: AudioEffect {
 
     private let window: Int
     private let mask: Int
-    private let buffer: UnsafeMutablePointer<Float>
+    private let history: UnsafeMutablePointer<Float>
     private var writeIndex = 0
     /// Retardo de la primera lectura, en [0, window). La segunda va media ventana por detrás.
     private var delay: Double
 
     public init(windowSamples: Int = 1536) {
-        window = max(windowSamples, 64)
+        // Par, para que las dos lecturas queden exactamente a media ventana.
+        window = (max(windowSamples, 64) + 1) & ~1
         latencySamples = window / 2
         var size = 1
         while size < window + 4 { size <<= 1 }
         mask = size - 1
-        buffer = .allocate(capacity: size)
-        buffer.initialize(repeating: 0, count: size)
+        history = .allocate(capacity: size)
+        history.initialize(repeating: 0, count: size)
         // Empieza con la primera lectura en ventana completa (peso 1) y la segunda en peso 0.
         delay = Double(window / 2)
     }
 
     deinit {
-        buffer.deallocate()
+        history.deallocate()
     }
 
     public func setSemitones(_ s: Float) {
@@ -53,7 +54,7 @@ public final class PitchShifter: AudioEffect {
 
     @inline(__always)
     public func processSample(_ x: Float) -> Float {
-        buffer[writeIndex & mask] = x
+        history[writeIndex & mask] = x
 
         let w = Double(window)
         let first = delay
@@ -65,7 +66,8 @@ public final class PitchShifter: AudioEffect {
         let y = gain1 * read(first) + (1 - gain1) * read(second)
 
         // Lectura a velocidad `ratio`: el retardo cambia en (1 − ratio) por muestra.
-        let r = Double(min(max(ratio, Self.minRatio), Self.maxRatio))
+        // Un NaN haría `delay` NaN y `Int(delay)` abortaría en el hilo de audio.
+        let r = ratio.isNaN ? 1.0 : Double(min(max(ratio, Self.minRatio), Self.maxRatio))
         delay += 1 - r
         if delay < 0 { delay += w } else if delay >= w { delay -= w }
 
@@ -78,8 +80,8 @@ public final class PitchShifter: AudioEffect {
     private func read(_ delay: Double) -> Float {
         let whole = Int(delay)
         let frac = Float(delay - Double(whole))
-        let a = buffer[(writeIndex - whole) & mask]
-        let b = buffer[(writeIndex - whole - 1) & mask]
+        let a = history[(writeIndex - whole) & mask]
+        let b = history[(writeIndex - whole - 1) & mask]
         return a + (b - a) * frac
     }
 
@@ -90,7 +92,7 @@ public final class PitchShifter: AudioEffect {
     }
 
     public func reset() {
-        buffer.update(repeating: 0, count: mask + 1)
+        history.update(repeating: 0, count: mask + 1)
         writeIndex = 0
         delay = Double(window / 2)
     }

@@ -73,6 +73,32 @@ private func burstLatency(silence: Int, ratio: Float) -> Int {
     }
 }
 
+@Test func shifterLatencyIsBoundedForOtherRatios() {
+    // Personajes graves (ratio < 1), autotune (≈ 1) y agudos.
+    for ratio: Float in [0.5, 0.75, 1.0, 1.03, 2.0] {
+        for k in 0..<24 {
+            let silence = 9600 + k * 131
+            let latency = burstLatency(silence: silence, ratio: ratio)
+            #expect(latency <= 1200, "ratio \(ratio), silencio \(silence): \(latency) muestras")
+        }
+    }
+}
+
+@Test func shifterSurvivesNaNRatio() {
+    let shifter = PitchShifter()
+    shifter.ratio = .nan
+    var x = sine(300, seconds: 0.1)
+    shifter.process(&x)
+    #expect(x.allSatisfy { $0.isFinite })
+    shifter.setSemitones(.nan)
+    shifter.process(&x)
+    #expect(x.allSatisfy { $0.isFinite })
+}
+
+@Test func shifterOddWindowIsRoundedToEven() {
+    #expect(PitchShifter(windowSamples: 1537).latencySamples == 769)
+}
+
 @Test func shifterNominalLatencyIsHalfWindow() {
     #expect(PitchShifter().latencySamples == 768)
     #expect(PitchShifter(windowSamples: 1024).latencySamples == 512)
@@ -179,6 +205,14 @@ private func pushAll(_ detector: PitchDetector, _ x: [Float], chunk: Int = 256) 
     // −60 dBFS RMS: por debajo del umbral de −50 dBFS.
     pushAll(detector, sine(220, seconds: 0.5, amplitude: dbToGain(-60) * Float(2).squareRoot()))
     #expect(detector.frequency == nil)
+}
+
+@Test func detectorDetectsToneJustAboveSilenceGate() {
+    let detector = PitchDetector()
+    // −40 dBFS RMS: por encima del umbral de −50 dBFS, debe detectarse.
+    pushAll(detector, sine(220, seconds: 0.5, amplitude: dbToGain(-40) * Float(2).squareRoot()))
+    let estimated = Double(detector.frequency ?? 0)
+    #expect(abs(estimated - 220) / 220 < 0.01, "estimada \(estimated) Hz")
 }
 
 @Test func detectorResultDoesNotDependOnChunkSize() {

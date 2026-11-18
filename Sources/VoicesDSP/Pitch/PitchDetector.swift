@@ -44,8 +44,8 @@ public final class PitchDetector {
         decimatedRate = Float(sampleRate) / 2
         hop = max(hopSamples, 1)
         tauMin = max(Int(decimatedRate / maxHz), 2)
-        // `tauMax + 1` queda libre para poder interpolar en el último retardo.
-        let wantedTauMax = Int((decimatedRate / minHz).rounded(.up)) + 1
+        // `tauMax` siempre queda por encima de `tauMin` aunque se pasen frecuencias incoherentes.
+        let wantedTauMax = max(Int((decimatedRate / minHz).rounded(.up)) + 1, tauMin + 2)
         frameLength = max(windowSamples / 2, 2 * wantedTauMax + 2)
         tauMax = wantedTauMax
         integration = frameLength - tauMax - 1
