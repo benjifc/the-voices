@@ -64,6 +64,7 @@ public final class DeEsser: AudioEffect {
 
             let coef = targetDb < reductionDb ? attackCoef : releaseCoef
             reductionDb = targetDb + coef * (reductionDb - targetDb)
+            if abs(reductionDb) < 1e-6 { reductionDb = 0 }
 
             let g: Float = reductionDb > -0.0001 ? 1 : dbToGain(reductionDb)
             buffer[i] = x - (1 - g) * bp

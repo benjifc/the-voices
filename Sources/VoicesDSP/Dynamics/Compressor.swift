@@ -18,7 +18,8 @@ public struct CompressorSettings: Sendable {
     }
 }
 
-/// Compresor feed-forward con detector RMS (ventana ≈ 10 ms) y rodilla dura.
+/// Compresor feed-forward con detector RMS (media cuadrática con constante de tiempo
+/// de 10 ms, equivalente a una ventana rectangular de ≈ 20 ms) y rodilla dura.
 ///
 /// `update` no asigna memoria, pero no es atómico: no debe llamarse desde otro hilo
 /// mientras `process` se ejecuta.
@@ -62,6 +63,7 @@ public final class Compressor: AudioEffect {
             // Más reducción = ataque; menos reducción = liberación.
             let coef = targetDb < reductionDb ? attackCoef : releaseCoef
             reductionDb = targetDb + coef * (reductionDb - targetDb)
+            if abs(reductionDb) < 1e-6 { reductionDb = 0 }
 
             let totalDb = reductionDb + makeupDb
             let gain: Float = abs(totalDb) < 0.0001 ? 1 : dbToGain(totalDb)

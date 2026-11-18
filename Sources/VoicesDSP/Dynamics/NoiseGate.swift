@@ -25,6 +25,9 @@ public struct GateSettings: Sendable {
 
 /// Puerta de ruido (expansor) con detector de envolvente de pico y tiempo de retención.
 ///
+/// El tiempo efectivo de apertura tras la última señal sobre el umbral es `holdMs` más lo
+/// que tarda la envolvente de pico (decaimiento de 10 ms) en caer por debajo del umbral.
+///
 /// `update` no asigna memoria, pero no es atómico: no debe llamarse desde otro hilo
 /// mientras `process` se ejecuta.
 public final class NoiseGate: AudioEffect {
@@ -76,6 +79,7 @@ public final class NoiseGate: AudioEffect {
             // Abrir = ganancia sube (attack); cerrar = ganancia baja (release).
             let coef = targetDb < gainDb ? releaseCoef : attackCoef
             gainDb = targetDb + coef * (gainDb - targetDb)
+            if abs(gainDb) < 1e-6 { gainDb = 0 }
             let gain: Float = gainDb > -0.0001 ? 1 : dbToGain(gainDb)
             buffer[i] = x * gain
         }

@@ -105,8 +105,8 @@ private let testCompressor = CompressorSettings(
     DeEsser(settings).process(&sibilant)
     let reduction = rmsDb(lastHalfSecond(sibilantIn)) - rmsDb(lastHalfSecond(sibilant))
     // Con la señal en el centro la reducción satura en el máximo (8 dB); se admite
-    // un margen numérico mínimo por encima.
-    #expect(reduction >= 4 && reduction <= 8.1, "reducción \(reduction) dB")
+    // un margen numérico mínimo (0,02 dB) por encima.
+    #expect(reduction >= 4 && reduction <= 8.02, "reducción \(reduction) dB")
 
     let lowIn = sineAt(500, seconds: 1, level: -12)
     var low = lowIn
