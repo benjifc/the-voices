@@ -13,7 +13,8 @@ public enum BiquadKind: Sendable {
 /// Filtro biquad en forma directa transpuesta II.
 ///
 /// `configure` no asigna memoria y conserva el estado, así que puede llamarse
-/// desde el hilo de audio.
+/// desde el hilo de audio. No es atómico: no debe llamarse desde otro hilo mientras
+/// `process` se ejecuta.
 public final class Biquad: AudioEffect {
     // Coeficientes normalizados (a0 = 1).
     private var b0 = 1.0

@@ -60,6 +60,20 @@ private func gainDb(
     #expect(abs(rmsDb(output[tail...]) - rmsDb(input[tail...])) < 0.5)
 }
 
+@Test func configureDoesNotClearState() {
+    // Dos filtros idénticos con el mismo historial; uno se reconfigura con los mismos
+    // parámetros a mitad de señal. Si `configure` borrase el estado, divergirían.
+    let continuous = Biquad(.lowPass, frequency: 1000, q: 0.707)
+    let reconfigured = Biquad(.lowPass, frequency: 1000, q: 0.707)
+    let input = sine(500, seconds: 0.1, amplitude: 0.9)
+    var a = input
+    var b = input
+    continuous.process(&a)
+    reconfigured.process(&b)
+    reconfigured.configure(.lowPass, frequency: 1000, q: 0.707)
+    #expect(continuous.processSample(0.3) == reconfigured.processSample(0.3))
+}
+
 @Test func resetClearsState() {
     let filter = Biquad(.lowPass, frequency: 1000, q: 0.707)
     var loud = sine(500, seconds: 0.1, amplitude: 0.9)
