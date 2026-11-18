@@ -52,6 +52,24 @@ import Testing
     #expect(a == b)
 }
 
+@Test func setLevelKeepsStageState() {
+    // Reaplicar el mismo nivel a mitad de señal no debe alterar la salida: si `setLevel`
+    // borrase el estado de algún filtro, ambas cadenas divergirían.
+    let input = whiteNoise(seconds: 0.2, amplitude: 0.3, seed: 5)
+    let half = input.count / 2
+    let reference = EnhancementChain(level: .normal)
+    var expected = input
+    reference.process(&expected)
+
+    let chain = EnhancementChain(level: .normal)
+    var first = Array(input[0..<half])
+    var second = Array(input[half...])
+    chain.process(&first)
+    chain.setLevel(.normal)
+    chain.process(&second)
+    #expect(first + second == expected)
+}
+
 @Test func setLevelKeepsAudioFlowing() {
     // Cambiar de nivel a mitad de señal no produce muestras no finitas ni saltos enormes.
     let chain = EnhancementChain(level: .normal)

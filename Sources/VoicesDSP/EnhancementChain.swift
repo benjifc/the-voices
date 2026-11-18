@@ -73,33 +73,45 @@ private struct EnhancementParameters {
 /// desde el hilo de audio; no es atómico entre etapas, por lo que no debe llamarse desde
 /// otro hilo mientras `process` se ejecuta.
 public final class EnhancementChain: AudioEffect {
+    private static let highPassQ: Float = 0.707
     private static let shelfQ: Float = 0.707
+    private static let lowShelfHz: Float = 150
+    private static let mudHz: Float = 300
+    private static let presenceHz: Float = 3000
+    private static let highShelfHz: Float = 10_000
+    private static let peakQ: Float = 1
 
-    private let highPass = Biquad(.highPass, frequency: 80, q: 0.707)
-    private let gate = NoiseGate(
-        GateSettings(thresholdDb: -45, rangeDb: -12, attackMs: 1, holdMs: 150, releaseMs: 200))
-    private let lowShelf = Biquad(.lowShelf(gainDb: 0), frequency: 150, q: EnhancementChain.shelfQ)
-    private let mud = Biquad(.peak(gainDb: 0), frequency: 300, q: 1)
-    private let presence = Biquad(.peak(gainDb: 0), frequency: 3000, q: 1)
-    private let highShelf = Biquad(
-        .highShelf(gainDb: 0), frequency: 10_000, q: EnhancementChain.shelfQ)
-    private let compressor = Compressor(
-        CompressorSettings(thresholdDb: -22, ratio: 3, attackMs: 8, releaseMs: 100, makeupDb: 4))
-    private let deEsser = DeEsser(
-        DeEsserSettings(frequency: 6500, thresholdDb: -30, maxReductionDb: 8))
+    private let highPass: Biquad
+    private let gate: NoiseGate
+    private let lowShelf: Biquad
+    private let mud: Biquad
+    private let presence: Biquad
+    private let highShelf: Biquad
+    private let compressor: Compressor
+    private let deEsser: DeEsser
 
     public init(level: EnhancementLevel) {
-        setLevel(level)
+        let p = EnhancementParameters(level: level)
+        highPass = Biquad(.highPass, frequency: p.highPassHz, q: Self.highPassQ)
+        gate = NoiseGate(p.gate)
+        lowShelf = Biquad(.lowShelf(gainDb: p.lowShelfDb), frequency: Self.lowShelfHz, q: Self.shelfQ)
+        mud = Biquad(.peak(gainDb: p.mudDb), frequency: Self.mudHz, q: Self.peakQ)
+        presence = Biquad(.peak(gainDb: p.presenceDb), frequency: Self.presenceHz, q: Self.peakQ)
+        highShelf = Biquad(
+            .highShelf(gainDb: p.highShelfDb), frequency: Self.highShelfHz, q: Self.shelfQ)
+        compressor = Compressor(p.compressor)
+        deEsser = DeEsser(p.deEsser)
     }
 
     public func setLevel(_ level: EnhancementLevel) {
         let p = EnhancementParameters(level: level)
-        highPass.configure(.highPass, frequency: p.highPassHz, q: 0.707)
+        highPass.configure(.highPass, frequency: p.highPassHz, q: Self.highPassQ)
         gate.update(p.gate)
-        lowShelf.configure(.lowShelf(gainDb: p.lowShelfDb), frequency: 150, q: Self.shelfQ)
-        mud.configure(.peak(gainDb: p.mudDb), frequency: 300, q: 1)
-        presence.configure(.peak(gainDb: p.presenceDb), frequency: 3000, q: 1)
-        highShelf.configure(.highShelf(gainDb: p.highShelfDb), frequency: 10_000, q: Self.shelfQ)
+        lowShelf.configure(.lowShelf(gainDb: p.lowShelfDb), frequency: Self.lowShelfHz, q: Self.shelfQ)
+        mud.configure(.peak(gainDb: p.mudDb), frequency: Self.mudHz, q: Self.peakQ)
+        presence.configure(.peak(gainDb: p.presenceDb), frequency: Self.presenceHz, q: Self.peakQ)
+        highShelf.configure(
+            .highShelf(gainDb: p.highShelfDb), frequency: Self.highShelfHz, q: Self.shelfQ)
         compressor.update(p.compressor)
         deEsser.update(p.deEsser)
     }
