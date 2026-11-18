@@ -9,8 +9,8 @@ import Foundation
 /// - Con `ratio == 1` el retardo queda fijo en `latencySamples` y la salida es la entrada
 ///   retrasada sin alteración.
 /// - Con `ratio ≠ 1` el retardo recorre toda la ventana: la latencia media es
-///   `latencySamples` (ventana/2); el primer sonido llega antes para `ratio > 1`
-///   (como máximo ≈ ventana/ratio) y puede tardar hasta ≈ 2 · ventana/2 para `ratio < 1`.
+///   `latencySamples` (ventana/2). El primer sonido tras un silencio llega, medido, en
+///   ≈ 600 muestras como mucho para `ratio > 1` y ≈ 850 para `ratio < 1` (ventana 1536).
 /// - `ratio` puede cambiarse entre cualquier par de muestras (`processSample`).
 ///
 /// Todo el estado se reserva en `init`; `process` no asigna memoria.
