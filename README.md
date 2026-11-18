@@ -27,4 +27,6 @@ El instalador copia `The Voices.app` a `/Applications` (con pantallas de bienven
 
 Se puede usar y mejorar, siempre mencionando al creador original, **Benjamin Fernandez Carrasco**, y creando los forks a partir del repositorio original. Texto completo en [LICENSE](LICENSE).
 
+**Repositorio Original:** https://github.com/benjifc/the-voices (creador: Benjamin Fernandez Carrasco). Los forks y las mejoras deben partir de ese repositorio.
+
 Tests: `swift test` (los de rendimiento: `swift test -c release`).
